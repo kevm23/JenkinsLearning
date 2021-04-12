@@ -29,7 +29,7 @@ def buildApp() {
 
 def deploy(environment) {
 
-	def containerName = "pipeTest"
+	def containerName = "pipetest"
 	def port = "8888"
 
 	sh "docker ps -f name=${containerName} -q | xargs --no-run-if-empty docker stop"
