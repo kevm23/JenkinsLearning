@@ -23,7 +23,7 @@ pipeline {
 
 // steps
 def buildApp() {
-	def appImage = docker.build("pipeLearning/myapp:${BUILD_NUMBER}")
+	def appImage = docker.build("pipelearning/myapp:${BUILD_NUMBER}")
 	
 }
 
