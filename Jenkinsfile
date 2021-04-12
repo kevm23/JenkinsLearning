@@ -1,32 +1,49 @@
 #!/usr/bin/groovy
-pipeline{
+
+pipeline {
     agent any
 
-    stages{
-        stage("Build"){
-            steps{
-                build()
-            }
-        }
-
-        stage("Deploy"){
-            steps{
-                deploy()
-            }
-        }
-
+    options {
+        disableConcurrentBuilds()
     }
+
+    stages {
+
+        stage("Build") {
+            steps { buildApp() }
+		}
+
+        stage("Deploy - Dev") {
+            steps { deploy('dev') }
+		}
+
+	}
 }
 
-def build(){
-    def appImage = docker.build("JenkinsLearning/app:$BUILD_NUMBER")
+
+// steps
+def buildApp() {
+	dir ('section_4/code/cd_pipeline' ) {
+		def appImage = docker.build("hands-on-jenkins/myapp:${BUILD_NUMBER}")
+	}
 }
 
-def deploy(){
-    def containerName="TestContainer"
-    def port = "8888"
+def deploy(environment) {
 
-    sh "docker ps -f name=${containerName} -q | xargs --no-run-if-empty docker stop"
+	def containerName = ''
+	def port = ''
+
+	if ("${environment}" == 'dev') {
+		containerName = "app_dev"
+		port = "8888"
+	} 
+	else {
+		println "Environment not valid"
+		System.exit(0)
+	}
+
+	sh "docker ps -f name=${containerName} -q | xargs --no-run-if-empty docker stop"
 	sh "docker ps -a -f name=${containerName} -q | xargs -r docker rm"
 	sh "docker run -d -p ${port}:5000 --name ${containerName} hands-on-jenkins/myapp:${BUILD_NUMBER}"
+
 }
