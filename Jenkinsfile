@@ -1,3 +1,4 @@
+#!/usr/bin/groovy
 pipeline{
     agent any
 
@@ -5,14 +6,14 @@ pipeline{
         stage('Build'){
             steps{
                 echo 'Building'
-                build();
+                build()
             }
         }
 
         stage('Deploy'){
             steps{
                 echo 'Deploying'
-                deploy();
+                deploy()
             }
         }
 
