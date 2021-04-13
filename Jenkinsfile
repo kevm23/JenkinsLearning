@@ -39,5 +39,9 @@ def deploy() {
 }
 
 def runTest() {
-	sh "pytest containerRunning.py"
+	withPythonEnv('python3') {
+        	sh 'pip install pytest'
+        	sh "pytest containerRunning.py"
+    	}
+	
 }
