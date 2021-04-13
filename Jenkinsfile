@@ -44,8 +44,6 @@ def deploy() {
 }
 
 def runTest() {
-        	sh 'pip3 install pytest'
-        	sh "pytest containerRunning.py"
-    	
-	
+        sh 'pip3 install pytest'
+        sh "pytest tests/containerRunning.py"
 }
