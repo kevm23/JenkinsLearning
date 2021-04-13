@@ -3,10 +3,6 @@
 pipeline {
     agent any
 
-    options {
-        disableConcurrentBuilds()
-    }
-
     stages {
 
         stage("Build") {
@@ -14,7 +10,7 @@ pipeline {
 		}
 
         stage("Deploy - Dev") {
-            steps { deploy('dev') }
+            steps { deploy() }
 		}
 
 	}
@@ -27,7 +23,7 @@ def buildApp() {
 	
 }
 
-def deploy(environment) {
+def deploy() {
 
 	def containerName = "pipetest"
 	def port = "8888"
