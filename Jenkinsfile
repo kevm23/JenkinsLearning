@@ -9,6 +9,10 @@ pipeline {
             steps { buildApp() }
 		}
 
+		stage("Test") {
+			steps { runTest() }
+		}
+
         stage("Deploy - Dev") {
             steps { deploy() }
 		}
@@ -32,4 +36,8 @@ def deploy() {
 	sh "docker ps -a -f name=${containerName} -q | xargs -r docker rm"
 	sh "docker run -d -p ${port}:5000 --name ${containerName} pipelearning/myapp:${BUILD_NUMBER}"
 
+}
+
+def runTest() {
+	sh "python3 tests/containerRunning.py"
 }
