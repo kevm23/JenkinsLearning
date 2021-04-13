@@ -2,6 +2,11 @@
 
 pipeline {
     agent any
+	
+	environment {
+		PYTHONPATH = "${WORKSPACE}"
+	}
+
 
     stages {
 
