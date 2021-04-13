@@ -39,5 +39,5 @@ def deploy() {
 }
 
 def runTest() {
-	sh "python3 tests/containerRunning.py"
+	bat "pytest containerRunning.py"
 }
